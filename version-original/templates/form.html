@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar canción' if editing else 'Agregar canción' }} · Music Manager{% endblock %}
+
+{% block content %}
+<section class="form-panel">
+  <h1>{{ 'Editar canción' if editing else 'Agregar canción' }}</h1>
+
+  <form method="post" novalidate>
+    <div class="field">
+      <label for="title">Título</label>
+      <input id="title" name="title" type="text" maxlength="150" required value="{{ form.title or '' }}" autofocus>
+    </div>
+
+    <div class="field">
+      <label for="artist">Artista</label>
+      <input id="artist" name="artist" type="text" maxlength="150" required value="{{ form.artist or '' }}">
+    </div>
+
+    <div class="field">
+      <label for="album">Álbum <span class="optional">(opcional)</span></label>
+      <input id="album" name="album" type="text" maxlength="150" value="{{ form.album or '' }}">
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="genre">Género</label>
+        <input id="genre" name="genre" type="text" list="genre-list" maxlength="60" required value="{{ form.genre or '' }}">
+        <datalist id="genre-list">
+          {% for g in genre_options %}<option value="{{ g }}">{% endfor %}
+        </datalist>
+      </div>
+      <div class="field">
+        <label for="listened_on">Fecha de escucha</label>
+        <input id="listened_on" name="listened_on" type="date" required value="{{ form.listened_on or '' }}">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit">{{ 'Guardar cambios' if editing else 'Guardar canción' }}</button>
+      <a class="btn btn-link" href="{{ url_for('index') }}">Cancelar</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
