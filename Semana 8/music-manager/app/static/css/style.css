@@ -10,8 +10,8 @@
   --amber: #ffb547;
   --danger: #ff7a7a;
   --radius: 12px;
-  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --font-body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Segoe UI", system-ui, sans-serif;
+  --font-body: "Segoe UI", system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -186,3 +186,11 @@ tbody tr:hover { background: rgba(255, 255, 255, 0.025); }
   .form-panel { padding: 22px; }
   .brand-name { font-size: 1.25rem; }
 }
+
+/* ---------- Autenticación, paginación y barra de usuario ---------- */
+.topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.topbar-actions form { margin: 0; }
+.whoami { color: var(--muted); font-size: 0.95rem; }
+.form-panel.narrow { max-width: 420px; }
+.pagination { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 20px; }
+input[type="password"] { width: 100%; }

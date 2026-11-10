@@ -1,0 +1,14 @@
+# Entorno y secretos
+.env
+.venv/
+venv/
+
+# Base de datos y datos locales
+instance/
+*.db
+*.sqlite3
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/

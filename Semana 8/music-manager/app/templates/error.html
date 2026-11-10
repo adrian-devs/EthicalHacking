@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} · Music Manager{% endblock %}
+
+{% block content %}
+<div class="empty">
+  <h2>{{ code }} · {{ title }}</h2>
+  <p>{{ text }}</p>
+  <a class="btn btn-ghost" href="{{ url_for('index') }}">Volver al inicio</a>
+</div>
+{% endblock %}

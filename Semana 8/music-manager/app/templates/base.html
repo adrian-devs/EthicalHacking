@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Music Manager{% endblock %}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -15,7 +13,16 @@
       <span class="vinyl" aria-hidden="true"></span>
       <span class="brand-name">Music Manager</span>
     </a>
-    <a class="btn btn-primary" href="{{ url_for('add_song') }}">Agregar canción</a>
+    {% if current_user.is_authenticated %}
+    <div class="topbar-actions">
+      <span class="whoami">{{ current_user.username }}</span>
+      <a class="btn btn-primary" href="{{ url_for('add_song') }}">Agregar canción</a>
+      <form method="post" action="{{ url_for('logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="btn btn-ghost" type="submit">Cerrar sesión</button>
+      </form>
+    </div>
+    {% endif %}
   </header>
 
   <main class="container">

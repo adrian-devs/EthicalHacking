@@ -17,7 +17,7 @@ Los prompts están copiados tal como se escribieron (incluidos errores de ortogr
 | 5 | Aplicar mejoras y entregar zip | Versión intermedia | commit `intermediate` |
 | 6 | Auditar la versión segura | 5 hallazgos nuevos | `scans/intermediate/` |
 | 7 | Requisitos completos de la práctica (SCA, SAST, ZAP, OWASP, CVSS+EPSS/KEV, UFW) | Versión final, informe | `v1-remediated` |
-| 8 | Informe PDF | `docs/` | `v1-remediated` |
+| 8 | Informe PDF | Se entrega aparte | - |
 
 ---
 
