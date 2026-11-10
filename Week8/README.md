@@ -10,7 +10,6 @@ Repositorio de la practica de Hacking Etico (Week 8, AI App Audit).
 | `PROMPTS.md` | Prompts usados para generar y auditar la app |
 | `findings.csv` | Hallazgos con CWE, CVSS 3.1, EPSS/KEV (si aplica), correccion y estado |
 | `scans/<version>/` | Salidas en bruto de Bandit, pip-audit, detect-secrets y ZAP |
-| `docs/` | Informe PDF |
 | `scripts/build_history.sh` | Construye el historial y las etiquetas |
 
 ## Etiquetas
