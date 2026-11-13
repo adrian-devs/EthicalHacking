@@ -9,7 +9,14 @@
     <td>{{ t.pk }}</td>
     <td><a href="/tickets/{{ t.pk }}/" style="color:#3be07a">{{ t.title }}</a></td>
     <td class="sev-{{ t.severity }}">{{ t.get_severity_display }}</td>
-    <td><a href="/tickets/{{ t.pk }}/delete/" style="color:#ff6b6b">delete</a></td>
+    <!-- Nuevo cambio -->
+    <td>
+      <form method="post" action="/tickets/{{ t.pk }}/delete/" style="display:inline">
+        {% csrf_token %}
+        <button type="submit" style="background:none;border:none;color:#ff6b6b;cursor:pointer">delete</button>
+      </form>
+    </td>
+
   </tr>
   {% empty %}<tr><td colspan="4">No tickets yet.</td></tr>
   {% endfor %}

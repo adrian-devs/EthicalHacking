@@ -1,9 +1,10 @@
 import csv
 
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 from .models import Ticket
 
@@ -29,14 +30,14 @@ def ticket_create(request):
 
 @login_required
 def ticket_detail(request, pk):
-    ticket = get_object_or_404(Ticket, pk=pk)
+    ticket = get_object_or_404(Ticket, pk=pk, owner=request.user)
     return render(request, "tickets/detail.html", {"ticket": ticket})
 
 
-@csrf_exempt
 @login_required
+@require_POST
 def ticket_delete(request, pk):
-    ticket = get_object_or_404(Ticket, pk=pk)
+    ticket = get_object_or_404(Ticket, pk=pk, owner=request.user)
     ticket.delete()
     return redirect("ticket_list")
 
@@ -46,14 +47,11 @@ def search(request):
     q = request.GET.get("q", "")
     results = []
     if q:
-        sql = (
-            "SELECT * FROM tickets_ticket "
-            f"WHERE owner_id = {request.user.id} AND title LIKE '%%{q}%%'"
-        )
-        results = list(Ticket.objects.raw(sql))
+        results = Ticket.objects.filter(owner=request.user, title__icontains=q)
     return render(request, "tickets/search.html", {"q": q, "results": results})
 
 
+@staff_member_required
 def export_csv(request):
     """Quick export for the auditors."""
     response = HttpResponse(content_type="text/csv")

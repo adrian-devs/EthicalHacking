@@ -6,10 +6,16 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+from dotenv import load_dotenv
+load_dotenv(BASE_DIR / ".env")
 
-SECRET_KEY = "django-insecure-ticketdesk-dev-key-123"
-DEBUG = True
-ALLOWED_HOSTS = ["*"]
+
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",") if h.strip()]
+#SECRET_KEY = "django-insecure-ticketdesk-dev-key-123" 
+#DEBUG = True
+#ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -55,8 +61,10 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "ticketdesk",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
+        "USER": os.environ["DB_USER"],
+        "PASSWORD": os.environ["DB_PASSWORD"],
+        #"USER": "postgres",
+        #"PASSWORD": "postgres",
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }
@@ -67,16 +75,31 @@ if os.environ.get("USE_SQLITE") == "1":
     DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3",
                              "NAME": BASE_DIR / "db.sqlite3"}}
 
-# "Faster logins" - fast MD5 hash first in the list.
+
 PASSWORD_HASHERS = [
-    "django.contrib.auth.hashers.MD5PasswordHasher",
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.MD5PasswordHasher",
 ]
 
-# "Users complained about password rules" - all validators removed.
-AUTH_PASSWORD_VALIDATORS = []
 
-SESSION_COOKIE_HTTPONLY = False   # "the front-end needs to read the cookie"
+# "Faster logins" - fast MD5 hash first in the list.
+#PASSWORD_HASHERS = [
+    #"django.contrib.auth.hashers.MD5PasswordHasher",
+    #"django.contrib.auth.hashers.PBKDF2PasswordHasher",
+#]
+
+
+AUTH_PASSWORD_VALIDATORS = [
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+     "OPTIONS": {"min_length": 10}},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
+
+#SESSION_COOKIE_HTTPONLY = False   # "the front-end needs to read the cookie"
+SESSION_COOKIE_HTTPONLY = True
 
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"

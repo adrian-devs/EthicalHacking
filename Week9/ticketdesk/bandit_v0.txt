@@ -1,0 +1,59 @@
+Run started:2026-11-11 20:38:34.662808+00:00
+
+Test results:
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'django-insecure-ticketdesk-dev-key-123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./ticketdesk/settings.py:10:13
+9	
+10	SECRET_KEY = "django-insecure-ticketdesk-dev-key-123"
+11	DEBUG = True
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'postgres'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./ticketdesk/settings.py:59:8
+58	        "USER": "postgres",
+59	        "PASSWORD": "postgres",
+60	        "HOST": "127.0.0.1",
+61	        "PORT": "5432",
+62	    }
+63	}
+64	
+65	# Troubleshooting only: run with USE_SQLITE=1 if PostgreSQL is not available.
+66	if os.environ.get("USE_SQLITE") == "1":
+67	    DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3",
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./tickets/views.py:50:12
+49	        sql = (
+50	            "SELECT * FROM tickets_ticket "
+51	            f"WHERE owner_id = {request.user.id} AND title LIKE '%%{q}%%'"
+52	        )
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 379
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 2
+		Medium: 1
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 1
+		Medium: 2
+		High: 0
+Files skipped (0):

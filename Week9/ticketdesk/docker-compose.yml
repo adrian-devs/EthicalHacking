@@ -5,10 +5,10 @@ services:
     container_name: ticketdesk-db
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ticketdesk
     ports:
-      - "5432:5432"        # published on ALL interfaces (0.0.0.0)
+      - "127.0.0.1:5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 volumes:
