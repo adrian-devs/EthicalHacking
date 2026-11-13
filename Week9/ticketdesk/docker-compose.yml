@@ -1,0 +1,15 @@
+# TicketDesk database - Week 9 lab baseline (INSECURE ON PURPOSE)
+services:
+  db:
+    image: postgres:16
+    container_name: ticketdesk-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ticketdesk
+    ports:
+      - "5432:5432"        # published on ALL interfaces (0.0.0.0)
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:

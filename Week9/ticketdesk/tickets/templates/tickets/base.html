@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>TicketDesk</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background:#0b1710; color:#d8f5e3; margin:0; }
+    header { background:#14201a; padding:12px 24px; display:flex; gap:18px; align-items:center; }
+    header a, header button { color:#3be07a; text-decoration:none; background:none; border:0; font:inherit; cursor:pointer; }
+    main { max-width:820px; margin:24px auto; padding:0 16px; }
+    input, textarea, select { width:100%; padding:8px; margin:4px 0 12px; background:#14201a; color:#d8f5e3; border:1px solid #2d4a38; }
+    table { width:100%; border-collapse:collapse; }
+    td, th { border-bottom:1px solid #2d4a38; padding:8px; text-align:left; }
+    .btn { background:#0f7d3c; color:#fff; padding:8px 14px; border:0; cursor:pointer; text-decoration:none; }
+    .sev-critical { color:#ff6b6b; } .sev-high { color:#ffb84d; }
+    .card { background:#14201a; padding:16px; border-left:4px solid #0f7d3c; }
+  </style>
+</head>
+<body>
+<header>
+  <strong>&#x1F6E1; TicketDesk</strong>
+  {% if user.is_authenticated %}
+    <a href="/">My tickets</a> <a href="/tickets/new/">New</a> <a href="/search/">Search</a>
+    <span style="margin-left:auto">{{ user.username }}</span>
+    <form method="post" action="/accounts/logout/" style="display:inline">{% csrf_token %}<button>Log out</button></form>
+  {% endif %}
+</header>
+<main>{% block content %}{% endblock %}</main>
+</body>
+</html>

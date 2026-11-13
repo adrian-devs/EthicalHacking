@@ -1,0 +1,8 @@
+{% extends "tickets/base.html" %}
+{% block content %}
+<h2>Log in</h2>
+<form method="post">{% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn">Log in</button>
+</form>
+{% endblock %}

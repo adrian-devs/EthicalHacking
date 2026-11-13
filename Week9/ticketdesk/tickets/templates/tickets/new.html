@@ -1,0 +1,11 @@
+{% extends "tickets/base.html" %}
+{% block content %}
+<h2>New incident ticket</h2>
+<form method="post">{% csrf_token %}
+  <label>Title</label><input name="title" required>
+  <label>Severity</label>
+  <select name="severity"><option>low</option><option selected>medium</option><option>high</option><option>critical</option></select>
+  <label>Description (formatting allowed)</label><textarea name="description" rows="6"></textarea>
+  <button class="btn">Create</button>
+</form>
+{% endblock %}

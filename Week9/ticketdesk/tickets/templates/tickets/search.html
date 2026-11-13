@@ -1,0 +1,7 @@
+{% extends "tickets/base.html" %}
+{% block content %}
+<h2>Search my tickets</h2>
+<form method="get"><input name="q" value="{{ q }}" placeholder="title contains..."><button class="btn">Search</button></form>
+{% if q %}<p>{{ results|length }} result(s) for "{{ q }}"</p>{% endif %}
+<ul>{% for t in results %}<li><a href="/tickets/{{ t.pk }}/" style="color:#3be07a">#{{ t.pk }} {{ t.title }}</a> ({{ t.owner_id }})</li>{% endfor %}</ul>
+{% endblock %}
